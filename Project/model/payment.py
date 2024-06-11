@@ -12,6 +12,7 @@ iamport = Iamport(imp_key, imp_secret)
 
 class Payment:
     def get_token(payload, user_id, learn_id, sell_user_id):
+        print("get_token START")
         access_data = {
             "imp_key": imp_key,
             "imp_secret": imp_secret,
@@ -26,10 +27,12 @@ class Payment:
         access_token = res['response']['access_token']
         Payment.one_time_buy(access_token, payload,
                              user_id, learn_id, sell_user_id)
+        print("get_token END")
         pass
 
     def one_time_buy(access_token, info, user_id, learn_id, sell_user_id):
         # stor_id = "store-58d513cc-2fc8-432e-83f0-8b98a6cb5574"
+        print("one_time_buy:: Start")
 
         header = {
             "Content-Type": "application/json",
@@ -40,7 +43,7 @@ class Payment:
             'https://api.iamport.kr/subscribe/payments/onetime', json=info, headers=header)
         res = req.json()
         if res["code"] == 0:
-            current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            current_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             response = res["response"]
             amount = response['amount']
             # 'https://npg.nicepay.co.kr/issue/IssueLoader.do?TID=iamport01m01162403290714307137&type=0&InnerWin=Y',
@@ -52,7 +55,7 @@ class Payment:
                               card_name, receipt_url, current_time)
             sql = f'INSERT INTO sell_online_learn (user_id, online_learn_id, created_at) VALUES(?,?,?)'
             Database.write_db(sql, sell_user_id, learn_id, current_time)
-
+            print("one_time_buy:: End")
             return
 
         print(res)

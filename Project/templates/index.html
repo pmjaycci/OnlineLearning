@@ -5,65 +5,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>메인 페이지</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/button_styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login_form_styles.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index_styles.css') }}">
+
 </head>
 
 <body>
-    <!-- 로그인 / 마이페이지 표시 -->
-    {% if is_login == False%}
-    <h1>Login</h1>
-    <form action="account/login" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
-        <button type="submit">Login</button>
-    </form>
-    {%else%}
-    <form action="account/logout" method="get">
-        <button type="submit">Logout</button>
-    </form>
-    <form action="my_page" method="post">
-        <button type="submit">마이 페이지</button>
-    </form>
-    {%endif%}
-    <p>{{login_user}}</p>
-    <!-- 로그인 / 마이페이지 표시 끝-->
-    <div>
-        <form action="/learn_add" method="post">
-            <button type="submit">강의 등록</button>
-        </form>
-        <h1> 강의 목록 </h1>
+    <img src="{{ url_for('static', filename='ui/bannerbg.png') }}" alt="banner" class="img-fluid">
 
-        {%for row in rows%}
-        <td colspan="2">
-            <table border="1">
+    <div class="container">
+
+        <!-- 로그인 폼 왼쪽에 배치 -->
+        <div class="login-form">
+            {% if is_login == False %}
+            <form action="login" method="post">
+                <h1>Login</h1>
+                <input type="text" id="username" name="username" placeholder="아이디" required>
+                <input type="password" id="password" name="password" placeholder="비밀번호" required>
+                <button type="submit">로그인</button>
+            </form>
+            {% else %}
+            <h1>Login</h1>
+
+            <p>{{ login_user }}</p>
+            <form action="my_page" method="post">
+                <button type="submit">마이 페이지</button>
+            </form>
+            <form action="logout" method="get">
+                <button type="submit">로그아웃</button>
+            </form>
+
+            {% endif %}
+
+        </div>
+
+        <!-- 전체 강의 목록 표시 -->
+        <div class="content-section">
+            <div class="header">
+                <h1>전체 강의 목록</h1>
+                {% if is_login == True %}
+                <form action="/learn_add" method="post">
+                    <button type="submit">강의 등록</button>
+                </form>
+                {%endif%}
+            </div>
+            <table>
                 <tr>
-                    <td>번호</td>
+                    <th>번호</th>
+                    <th>판매자</th>
+                    <th>금액</th>
+                    <th>제목</th>
+                </tr>
+                {% for row in rows %}
+                <tr>
                     <td>{{ row['id'] }}</td>
-                    <td>판매자</td>
                     <td>{{ row['user_id'] }}</td>
-                    <td>금액</td>
-                    <td>{{row['price']}}</td>
+                    <td>{{ row['price'] }}</td>
+                    <td><a href="{{ url_for('learn_detail.index', learn_id=row['id']) }}">id{{ row['id'] }}: {{
+                            row['title'] }}</a></td>
                 </tr>
-                <tr>
-
-                </tr>
-                <tr>
-                    <td>제목</td>
-                    <td>
-                        <a
-                            href="{{ url_for('learn_detail.index', learn_id=row['id']) }}">id{{row['id']}}:{{row['title']}}</a>
-                    </td>
-                </tr>
-                </p>
+                {% endfor %}
             </table>
-        </td>
-        {%endfor%}
-
+        </div>
     </div>
-
-
-
 </body>
 
 </html>

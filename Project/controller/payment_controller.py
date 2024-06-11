@@ -14,6 +14,7 @@ payment = Blueprint('payment', __name__, url_prefix='/payment')
 
 @payment.route('/', methods=['POST'])
 def index():
+    print("PAYMENT TEST")
     user_id = request.form['user_id']
     learn_id = request.form['online_learn_id']
     sell_user_id = request.form['sell_user_id']
@@ -34,7 +35,8 @@ def index():
         password = 11
         expiry = "2028-07"
 
-    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    current_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    print(f"TEST:: CURRENT TIME : {current_time}")
     pg_id = "iamport01m"
     pay_info = {
         "pg": f"nice.{pg_id}",
@@ -47,4 +49,5 @@ def index():
         "vat_amount": 0,
     }
     Payment.get_token(pay_info, user_id, learn_id, sell_user_id)
-    return redirect(url_for('learn_detail', learn_id=learn_id))
+    # return redirect(url_for('main.index', learn_id=learn_id))
+    return redirect(url_for('main.index', learn_id=learn_id))

@@ -40,7 +40,7 @@ def post():
     sql = f'INSERT INTO online_learn (user_id, price, title, contents) VALUES(?,?,?,?)'
 
     Database.write_db(sql, writer, price, title, content)
-    return redirect(url_for('index'))
+    return redirect(url_for('main.index'))
 
 
 @learn_add.route('/upload_image', methods=['POST', 'GET'])
@@ -62,27 +62,3 @@ def upload_image():
         return jsonify({'uploaded': True, 'url': url_for('static', filename='images/' + filename)})
     print("Invalid file type")
     return redirect(request.url)
-
-
-'''
-project
-├─ app.py
-├─ scripts
-│       ├─ init.py
-│       ├─ learn_add.py
-│       ├─ learn_detail.py
-│       ├─ login.py
-│       ├─ main.py
-│       ├─ my_page.py
-│       └─ payment.py
-│ 
-├─ templates
-│       ├─ index.html
-│       ├─ learn_add.html
-│       ├─ learn_detail.html
-│       └─ my_page.html
-│ 
-└─ static
-        └─ uploads
-                └─ bart.jpg
-'''

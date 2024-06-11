@@ -1,0 +1,25 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 24px;
+    padding: 15px;
+    margin-right: auto;
+    /* 강의 등록 버튼이 왼쪽으로 밀리도록 설정 */
+}
+
+.header form {
+    display: flex;
+    /* 내부 요소를 가로로 배치 */
+    align-items: center;
+    /* 세로 정렬을 위해 필요 */
+}
+
+.header form button {
+    margin-left: 10px;
+    /* 버튼 사이 간격 설정 */
+}

@@ -1,5 +1,5 @@
-from flask import Blueprint, Flask, render_template, session
-from model.main import Main
+from flask import Blueprint, Flask, redirect, render_template, request, session, url_for
+from model.main import Main, Account
 
 main = Blueprint('main', __name__)
 
@@ -14,3 +14,18 @@ def index():
         is_login = True
     rows = Main.learn_load()
     return render_template('index.html', login_user=login_user, is_login=is_login, rows=rows)
+
+
+@main.route('/login', methods=['POST'])
+def login():
+    username = request.form['username']
+    password = request.form['password']
+    Account.login_check(username, password)
+    print(f"Name [{username}]/[{password}]")
+    return redirect(url_for('main.index'))
+
+
+@main.route('/logout', methods=['GET'])
+def logout():
+    session.pop('user_id', None)
+    return redirect(url_for('main.index'))

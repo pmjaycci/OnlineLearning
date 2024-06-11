@@ -38,6 +38,8 @@ class Database:
         cursor = db.execute(sql, values)
         rows = cursor.fetchall()
         cursor.close()
+        if not rows:
+            return []
         return rows
 
     @staticmethod

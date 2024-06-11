@@ -49,3 +49,12 @@ CREATE TABLE IF NOT EXISTS sell_online_learn (
     CONSTRAINT sell_online_learn_fk FOREIGN KEY(online_learn_id)
     REFERENCES online_learn(id)
 );
+
+CREATE TABLE IF NOT EXISTS online_learn_video (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id VARCHAR(10) NOT NULL,
+    online_learn_id INTEGER NOT NULL,
+    learn_order INTEGER,
+    learn_name TEXT,
+    video_name TEXT
+);

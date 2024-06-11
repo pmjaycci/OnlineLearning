@@ -7,10 +7,39 @@
 
 <body>
     <h1>동영상 재생</h1>
+    {% if mime_type %}
     <video width="640" height="480" controls>
-        <source src="{{ url_for('static', filename='videos/' + filename) }}" type="video/mp4">
+        <source src="{{ url_for('static', filename=video_path) }}" type="{{ mime_type }}">
         Your browser does not support the video tag.
     </video>
+    {% else %}
+    <p>동영상을 재생할 수 없습니다.</p>
+    {% endif %}
+    {% if video_rows %}
+    <table border="1" cellspacing="0">
+        <caption>학습 목록</caption>
+        <!-- learn_order, learn_name, video_name -->
+        <tr>
+            <th>순서</th>
+            <th>제목</th>
+            <th>영상</th>
+        </tr>
+        {% for row in video_rows %}
+        <tr>
+            <td>{{ row['learn_order'] }}</td>
+            <td>{{ row['learn_name'] }}</td>
+            <td>
+                <form method="POST" action="/video/play" enctype="multipart/form-data">
+                    <input type="hidden" name="learn_id" value="{{ online_learn_id }}">
+                    <input type="hidden" name="learn_order" value="{{ row['learn_order'] }}">
+                    <input type="hidden" name="user_id" value="{{user_id}}">
+                    <button type="submit">재생</button>
+                </form>
+            </td>
+        </tr>
+        {%endfor%}
+    </table>
+    {% endif %}
 </body>
 
 </html>

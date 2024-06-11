@@ -58,7 +58,7 @@ def comment_post():
 
     print(f'learn_add_comment_post\n::댓글이 등록 되었습니다. 강의번호[{
           learn_id}] 작성자[{user_id}] 내용[{comment}]')
-    return learn_detail(learn_id)
+    return redirect(url_for('learn_detail.index', learn_id=learn_id))
 
 # 강의 내용 페이지 댓글 수정
 
@@ -77,7 +77,7 @@ def comment_update():
 
     print(f'learn_detail_comment_update\n::댓글이 업데이트 되었습니다. 강의번호[{
           learn_id}] 작성자[{user_id}] 삭제ID[{comment_id}]')
-    return learn_detail(learn_id)
+    return redirect(url_for('learn_detail.index', learn_id=learn_id))
 
 # 강의 내용 페이지 댓글 삭제
 
@@ -98,7 +98,7 @@ def comment_delete():
 
     print(f'learn_detail_comment_delete\n::댓글이 삭제 되었습니다. 강의번호[{
           learn_id}] 작성자[{user_id}] 삭제ID[{comment_id}]')
-    return learn_detail(learn_id)
+    return redirect(url_for('learn_detail.index', learn_id=learn_id))
 
 # 강의 내용 페이지 대댓글 작성
 
@@ -117,7 +117,7 @@ def comment_reply_post():
 
     print(f'learn_add_comment_reply_post\n::대댓글이 등록 되었습니다. 강의번호[{
           learn_id}] 작성자[{user_id}] 내용[{comment}]')
-    return learn_detail(learn_id)
+    return redirect(url_for('learn_detail.index', learn_id=learn_id))
 
 # 강의 내용 페이지 대댓글 수정
 
@@ -136,7 +136,7 @@ def comment_reply_update():
 
     print(f'learn_detail_comment_reply_update\n::대댓글이 업데이트 되었습니다. 강의번호[{
           learn_id}] 작성자[{user_id}] 삭제ID[{comment_id}]')
-    return learn_detail(learn_id)
+    return redirect(url_for('learn_detail.index', learn_id=learn_id))
 
 # 강의 내용 페이지 대댓글 삭제
 
@@ -154,7 +154,7 @@ def comment_reply_delete():
 
     print(f'learn_detail_comment_reply_delete\n::대댓글이 삭제 되었습니다. 강의번호[{
           learn_id}] 작성자[{user_id}] 삭제ID[{delete_id}]')
-    return learn_detail(learn_id)
+    return redirect(url_for('learn_detail.index', learn_id=learn_id))
 
 # 강의 구매
 
@@ -172,4 +172,4 @@ def buy():
 
     print(f'learn_detail_buy\n::구매테스트. 강의번호[{
           learn_id}] 작성자[{user_id}] 삭제ID[{delete_id}]')
-    return learn_detail(learn_id)
+    return redirect(url_for('learn_detail.index', learn_id=learn_id))
